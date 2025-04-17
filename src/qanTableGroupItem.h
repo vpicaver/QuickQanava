@@ -88,6 +88,9 @@ public:
     void        createCells(int cellsCount);
     void        createBorders(int verticalBordersCount, int horizontalBordersCount);
 
+    //! Insert a column FIXME #256 should not be qinvokable ?
+    Q_INVOKABLE void        insertColumn();
+
 protected:
     auto        createFromComponent(QQmlComponent& component) -> QQuickItem*;
 

@@ -277,6 +277,62 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
     borderComponent->deleteLater();
 }
 
+void    TableGroupItem::insertColumn()
+{
+    // FIXME #256
+    // Create a new vertical border ?
+    // Create new cells according to actual row count ?
+
+    qWarning() << "qan::TableGroupItem::insertColumn()";
+
+    qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
+    auto engine = qmlEngine(this);
+    if (engine == nullptr) {
+        qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+        return;
+    }
+    // FIXME #256 component not destroyed
+    const auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
+                                                   QQmlComponent::PreferSynchronous, nullptr);
+    qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
+    qWarning() << "prevBorder=" << prevBorder;
+    auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
+    qWarning() << "borderComponent=" << borderComponent;
+    if (border != nullptr) {
+        border->setTableGroup(getTableGroup());
+        border->setOrientation(Qt::Vertical);
+        border->setParentItem(getContainer() != nullptr ? getContainer() : this);
+        border->setVisible(true);
+        border->setPrevBorder(prevBorder);
+        connect(border, &qan::TableBorder::modified,
+                this,   [this]() {
+                    const auto graph = this->getGraph();
+                    const auto tableGroup = this->getTableGroup();
+                    if (graph != nullptr &&
+                        tableGroup != nullptr)
+                        emit graph->tableModified(tableGroup);
+                });
+        _verticalBorders.push_back(border);
+        if (prevBorder != nullptr) {
+            prevBorder->setNextBorder(border);
+            border->setX(prevBorder->x() + 25);
+            border->setHeight(prevBorder->height());
+        }
+    }
+
+    // Create a column of cells
+    auto cellComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableCell.qml",
+                                           QQmlComponent::PreferSynchronous, nullptr);
+    auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*cellComponent));
+    if (cell != nullptr) {
+        _cells.push_back(cell);
+        cell->setParentItem(getContainer() != nullptr ? getContainer() : this);
+        cell->setVisible(true);
+        cell->setTable(getTableGroup());
+    }
+    cellComponent->deleteLater();
+}
+
 auto TableGroupItem::createFromComponent(QQmlComponent& component) -> QQuickItem*
 {
     if (!component.isReady()) {
@@ -519,7 +575,8 @@ bool    TableGroupItem::setGroup(qan::Group* group) noexcept
                 if (cell != nullptr)
                     cell->setTable(tableGroup);
 
-            // Note 20240831: Do not layout it is up to the user to call qan::TableGroup::initializeLayout()
+            // Note 20240831: Do not layout it is up to the user to call qan::TableGroup::initializeLayout(),
+            // for example you might want to use custom serialization code
             return true;
         }
     }
