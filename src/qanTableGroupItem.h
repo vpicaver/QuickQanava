@@ -86,8 +86,15 @@ public:
     void        initialize(int cols, int rows);
 
     void        createCells(int cellsCount);
+
     void        createBorders(int verticalBordersCount, int horizontalBordersCount);
 
+protected:
+    qan::TableBorder*   createBorder();
+
+    inline static QQmlComponent* _borderComponent = nullptr;
+
+public:
     //! Insert a column FIXME #257 should not be qinvokable ?
     Q_INVOKABLE void        insertColumn();
 

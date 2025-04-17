@@ -212,33 +212,34 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
         qWarning() << "TableGroupItem::createBorders(): Error, invalid vertical or horizontal borders count.";
         return;
     }
-    auto engine = qmlEngine(this);
-    if (engine == nullptr) {
-        qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
-        return;
-    }
-
-    const auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
-                                                   QQmlComponent::PreferSynchronous, nullptr);
+    // FIXME #257
+    // auto engine = qmlEngine(this);
+    // if (engine == nullptr) {
+    //     qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+    //     return;
+    // }
+    // const auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
+    //                                                QQmlComponent::PreferSynchronous, nullptr);
 
     qan::TableBorder* prevBorder = nullptr;
     if (verticalBordersCount != static_cast<int>(_verticalBorders.size())) {
         for (auto v = 0; v < verticalBordersCount; v++) {
-            auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
+            //auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
+            auto border = createBorder();
             if (border != nullptr) {
-                border->setTableGroup(getTableGroup());
+                //border->setTableGroup(getTableGroup());
                 border->setOrientation(Qt::Vertical);
-                border->setParentItem(getContainer() != nullptr ? getContainer() : this);
-                border->setVisible(true);
+                //border->setParentItem(getContainer() != nullptr ? getContainer() : this);
+                //border->setVisible(true);
                 border->setPrevBorder(prevBorder);
-                connect(border, &qan::TableBorder::modified,
-                        this,   [this]() {
-                    const auto graph = this->getGraph();
-                    const auto tableGroup = this->getTableGroup();
-                    if (graph != nullptr &&
-                        tableGroup != nullptr)
-                    emit graph->tableModified(tableGroup);
-                });
+                // connect(border, &qan::TableBorder::modified,
+                //         this,   [this]() {
+                //     const auto graph = this->getGraph();
+                //     const auto tableGroup = this->getTableGroup();
+                //     if (graph != nullptr &&
+                //         tableGroup != nullptr)
+                //     emit graph->tableModified(tableGroup);
+                // });
                 _verticalBorders.push_back(border);
 
                 if (prevBorder != nullptr)  // Audacious initialization of prevBorder nextBorder
@@ -250,21 +251,23 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
     prevBorder = nullptr;
     if (horizontalBordersCount != static_cast<int>(_horizontalBorders.size())) {
         for (auto h = 0; h < horizontalBordersCount; h++) {
-            auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
+            // FIXME #257
+            //auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
+            auto border = createBorder();
             if (border != nullptr) {
-                border->setTableGroup(getTableGroup());
+                //border->setTableGroup(getTableGroup());
                 border->setOrientation(Qt::Horizontal);
-                border->setParentItem(getContainer() != nullptr ? getContainer() : this);
-                border->setVisible(true);
+                //border->setParentItem(getContainer() != nullptr ? getContainer() : this);
+                //border->setVisible(true);
                 border->setPrevBorder(prevBorder);
-                connect(border, &qan::TableBorder::modified,
-                        this,   [this]() {
-                    const auto graph = this->getGraph();
-                    const auto tableGroup = this->getTableGroup();
-                    if (graph != nullptr &&
-                        tableGroup != nullptr)
-                    emit graph->tableModified(tableGroup);
-                });
+                // connect(border, &qan::TableBorder::modified,
+                //         this,   [this]() {
+                //     const auto graph = this->getGraph();
+                //     const auto tableGroup = this->getTableGroup();
+                //     if (graph != nullptr &&
+                //         tableGroup != nullptr)
+                //     emit graph->tableModified(tableGroup);
+                // });
                 _horizontalBorders.push_back(border);
 
                 if (prevBorder != nullptr)  // Audacious initialization of prevBorder nextBorder
@@ -274,36 +277,29 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
         }
     }
 
-    borderComponent->deleteLater();
+    // FIXME #257
+    //borderComponent->deleteLater();
 }
 
-void    TableGroupItem::insertColumn()
+qan::TableBorder*   TableGroupItem::createBorder()
 {
-    // FIXME #257
-    // Create a new vertical border ?
-    // Create new cells according to actual row count ?
-
-    qWarning() << "qan::TableGroupItem::insertColumn()";
-
-    qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
-    auto engine = qmlEngine(this);
-    if (engine == nullptr) {
-        qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
-        return;
+    if (TableGroupItem::_borderComponent == nullptr) {
+        auto engine = qmlEngine(this);
+        if (engine == nullptr) {
+            qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+            return nullptr;
+        }
+        // Component is parented to graph, will be destroyed when graph is destroyed
+        TableGroupItem::_borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
+                                             QQmlComponent::PreferSynchronous, getGraph());
     }
-    // FIXME #256 component not destroyed
-    const auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
-                                                   QQmlComponent::PreferSynchronous, nullptr);
-    qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
-    qWarning() << "prevBorder=" << prevBorder;
-    auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
-    qWarning() << "borderComponent=" << borderComponent;
+    if (!TableGroupItem::_borderComponent)
+        return nullptr;
+    auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*TableGroupItem::_borderComponent));
     if (border != nullptr) {
         border->setTableGroup(getTableGroup());
-        border->setOrientation(Qt::Vertical);
         border->setParentItem(getContainer() != nullptr ? getContainer() : this);
         border->setVisible(true);
-        border->setPrevBorder(prevBorder);
         connect(border, &qan::TableBorder::modified,
                 this,   [this]() {
                     const auto graph = this->getGraph();
@@ -312,6 +308,35 @@ void    TableGroupItem::insertColumn()
                         tableGroup != nullptr)
                         emit graph->tableModified(tableGroup);
                 });
+    }
+    return border;
+}
+
+void    TableGroupItem::insertColumn()
+{
+    // FIXME #257
+    // Create a new vertical border ?
+    // Create new cells according to actual row count ?
+
+    // Open questions:
+    // Need for fatorization of border/cell component management...
+    // Need and insert method: with insert after/before support...
+    // Interactions with qan::TableGroup (for example to set cols+1) ?
+
+    qWarning() << "qan::TableGroupItem::insertColumn()";
+    qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
+    auto engine = qmlEngine(this);
+    if (engine == nullptr) {
+        qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+        return;
+    }
+    qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
+    qWarning() << "prevBorder=" << prevBorder;
+    auto border = createBorder();
+    qWarning() << "border=" << border;
+    if (border != nullptr) {
+        border->setOrientation(Qt::Vertical);
+        border->setPrevBorder(prevBorder);
         _verticalBorders.push_back(border);
         if (prevBorder != nullptr) {
             prevBorder->setNextBorder(border);
