@@ -122,7 +122,7 @@ void    TableGroupItem::initialize(int cols, int rows)
         return;
     }
     clearLayout();
-    createCells(rows * cols);  // Create cells
+    initializeCells(rows * cols);  // Create cells
 
     // Notes:
     // - There is no "exterior" borders:
@@ -140,7 +140,7 @@ void    TableGroupItem::initialize(int cols, int rows)
     //
     // So cell index in _cells at (col=c, row=r) is _cells[(r * cols) + c]
 
-    createBorders(cols - 1, rows - 1);
+    initializeBorders(cols - 1, rows - 1);
     int c = 1;
     for (auto verticalBorder: _verticalBorders) {
         if (verticalBorder == nullptr)
@@ -168,10 +168,10 @@ void    TableGroupItem::initialize(int cols, int rows)
     // desirable in vertain serialization use cases.
 }
 
-void    TableGroupItem::createCells(int cellsCount)
+void    TableGroupItem::initializeCells(int cellsCount)
 {
     if (cellsCount <= 0) {
-        qWarning() << "TableGroupItem::createCells(): Error, invalid rows or cols count.";
+        qWarning() << "TableGroupItem::initializeCells(): Error, invalid rows or cols count.";
         return;
     }
     if (cellsCount == static_cast<int>(_cells.size()))
@@ -179,7 +179,7 @@ void    TableGroupItem::createCells(int cellsCount)
 
     auto engine = qmlEngine(this);
     if (engine == nullptr) {
-        qWarning() << "qan::TableGroupItem::createCells(): Error, no QML engine.";
+        qWarning() << "qan::TableGroupItem::initializeCells(): Error, no QML engine.";
         return;
     }
 
@@ -191,12 +191,12 @@ void    TableGroupItem::createCells(int cellsCount)
     }
 }
 
-void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBordersCount)
+void    TableGroupItem::initializeBorders(int verticalBordersCount, int horizontalBordersCount)
 {
-    //qWarning() << "qan::TableGroupItem::createBorders(): verticalBordersCount=" << verticalBordersCount << "  horizontalBordersCount=" << horizontalBordersCount;
+    //qWarning() << "qan::TableGroupItem::initializeBorders(): verticalBordersCount=" << verticalBordersCount << "  horizontalBordersCount=" << horizontalBordersCount;
     if (verticalBordersCount < 0 ||     // Might be 0 for 1x1 tables
         horizontalBordersCount < 0) {
-        qWarning() << "TableGroupItem::createBorders(): Error, invalid vertical or horizontal borders count.";
+        qWarning() << "TableGroupItem::initializeBorders(): Error, invalid vertical or horizontal borders count.";
         return;
     }
 
@@ -235,7 +235,7 @@ qan::TableBorder*   TableGroupItem::createBorder()
     if (TableGroupItem::_borderComponent == nullptr) {
         auto engine = qmlEngine(this);
         if (engine == nullptr) {
-            qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+            qWarning() << "qan::TableGroupItem::initializeBorders(): Error, no QML engine.";
             return nullptr;
         }
         // Component is parented to graph, will be destroyed when graph is destroyed
@@ -267,7 +267,7 @@ qan::TableCell*   TableGroupItem::createCell()
     if (TableGroupItem::_cellComponent == nullptr) {
         auto engine = qmlEngine(this);
         if (engine == nullptr) {
-            qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+            qWarning() << "qan::TableGroupItem::initializeBorders(): Error, no QML engine.";
             return nullptr;
         }
         // Component is parented to graph, will be destroyed when graph is destroyed
@@ -300,7 +300,7 @@ void    TableGroupItem::insertColumn()
     qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
     auto engine = qmlEngine(this);
     if (engine == nullptr) {
-        qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+        qWarning() << "qan::TableGroupItem::initializeBorders(): Error, no QML engine.";
         return;
     }
     qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
@@ -495,8 +495,8 @@ void    TableGroupItem::layoutTable()
     if (tableSize.isEmpty() || tableSize.isNull())
         return;
 
-    qWarning() << "TableGroupItem::layoutTable(): " << getGroup()->getLabel() <<
-        "  tableWidth=" << tableWidth << "tableHeight=" << tableHeight;
+    // qWarning() << "TableGroupItem::layoutTable(): " << getGroup()->getLabel() <<
+    //     "  tableWidth=" << tableWidth << "tableHeight=" << tableHeight;
 
     // Project normalized sx/sy coordinates to table item container CS.
     for (const auto verticalBorder: _verticalBorders) {

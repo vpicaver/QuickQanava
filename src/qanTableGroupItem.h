@@ -84,10 +84,9 @@ public:
 
     //! Initialize a table withe default cells and borders.
     void        initialize(int cols, int rows);
-
-    void        createCells(int cellsCount);
-
-    void        createBorders(int verticalBordersCount, int horizontalBordersCount);
+protected:
+    void        initializeCells(int cellsCount);
+    void        initializeBorders(int verticalBordersCount, int horizontalBordersCount);
 
 protected:
     //! Factory of TableBorder.qml components, return nullptr on error, border is returned partially configured.
