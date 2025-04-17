@@ -240,7 +240,7 @@ qan::TableBorder*   TableGroupItem::createBorder()
         }
         // Component is parented to graph, will be destroyed when graph is destroyed
         TableGroupItem::_borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
-                                             QQmlComponent::PreferSynchronous, getGraph());
+                                                             QQmlComponent::PreferSynchronous, getGraph());
     }
     if (!TableGroupItem::_borderComponent)
         return nullptr;
@@ -291,20 +291,24 @@ void    TableGroupItem::insertColumn()
     // Create a new vertical border for the new column
     // Create new cells for the new cols column count
     qWarning() << "qan::TableGroupItem::insertColumn()";
-    qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
+    const auto container = getContainer();
+    if (container == nullptr)
+        return;
     qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
+    if (prevBorder == nullptr)
+        return;
+    const auto width = container->width();
     auto border = createBorder();
     if (border != nullptr) {
         border->setOrientation(Qt::Vertical);
         border->setPrevBorder(prevBorder);
         _verticalBorders.push_back(border);
-        if (prevBorder != nullptr) {
-            prevBorder->setNextBorder(border);
-            border->setX(prevBorder->x() + 25);
-            border->setSx((1. - prevBorder->getSx()) / 2.1);
-            border->setHeight(prevBorder->height());
-            border->setWidth(3);
-        }
+        prevBorder->setNextBorder(border);
+        const auto x = prevBorder->x() + ((width - prevBorder->x()) / 2.0);
+        border->setX(x);
+        border->setSx(x / width);
+        border->setHeight(prevBorder->height());
+        border->setWidth(3);
     }
 
     // Update the _cells array, be very carefull there is a mapping from
@@ -319,10 +323,10 @@ void    TableGroupItem::insertColumn()
     newCells.resize(newCols * newRows);
     for (auto r = 0; r < oldRows; r++)  // Copy old cells to new table
         for (auto c = 0; c < oldRows; c++)
-            newCells[(r*newCols) + c] = _cells[(r*oldCols) + c];
-    for (auto r=0; r < oldRows; r++) {  // Create new cells for new column
+            newCells[(r * newCols) + c] = _cells[(r * oldCols) + c];
+    for (auto r = 0; r < oldRows; r++) {  // Create new cells for new column
         auto cell = createCell();
-        newCells[(r*newCols) + (newCols - 1)] = cell;
+        newCells[(r * newCols) + (newCols - 1)] = cell;
     }
     _cells = newCells;
     tableGroup->setCols(newCols);
@@ -333,21 +337,25 @@ void    TableGroupItem::insertRow()
     // Algorithm:
     // Create a new horizontal border for the new row
     // Create new cells for the new row
-    qWarning() << "qan::TableGroupItem::insertRow()";
-    qWarning() << "_horizontalBorders.size()=" << _horizontalBorders.size();
+    // qWarning() << "qan::TableGroupItem::insertRow()";
+    const auto container = getContainer();
+    if (container == nullptr)
+        return;
     qan::TableBorder* prevBorder = _horizontalBorders.empty() ? nullptr : _horizontalBorders.back();
+    if (prevBorder == nullptr)
+        return;
+    const auto height = container->height();
     auto border = createBorder();
     if (border != nullptr) {
         border->setOrientation(Qt::Horizontal);
         border->setPrevBorder(prevBorder);
         _horizontalBorders.push_back(border);
-        if (prevBorder != nullptr) {
-            prevBorder->setNextBorder(border);
-            border->setY(prevBorder->y() + 25);
-            border->setSy((1. - prevBorder->getSy()) / 2.1);
-            border->setWidth(prevBorder->width());
-            border->setHeight(3);
-        }
+        prevBorder->setNextBorder(border);
+        const auto y = prevBorder->y() + ((height - prevBorder->y()) / 2.0);
+        border->setY(y);
+        border->setSy(y / height);
+        border->setWidth(prevBorder->width());
+        border->setHeight(3);
     }
 
     // Update the _cells array, be very carefull there is a mapping from
@@ -418,9 +426,9 @@ void    TableGroupItem::initializeTableLayout()
     const int cols = tableGroup->getCols();
     const int rows = tableGroup->getRows();
     const auto spacing = tableGroup != nullptr ? tableGroup->getCellSpacing() :
-                                                 5.;
+                             5.;
     const auto padding = tableGroup != nullptr ? tableGroup->getTablePadding() :
-                                                 2.;
+                             2.;
 
     if (cols <= 0 || rows <= 0) {
         qWarning() << "qan::TableGroupItem::initializeTableLayout(): Error, rows and columns count can't be <= 0.";
@@ -432,13 +440,13 @@ void    TableGroupItem::initializeTableLayout()
     }
 
     const auto cellWidth = tableWidth > 0. ? (tableWidth
-                                           - (2 * padding)
-                                           - ((cols - 1) * spacing)) / cols :
-                                          0.;
+                                              - (2 * padding)
+                                              - ((cols - 1) * spacing)) / cols :
+                               0.;
     const auto cellHeight = tableHeight > 0. ? (tableHeight
-                                             - (2 * padding)
-                                             - ((rows - 1) * spacing)) / rows :
-                                            0.;
+                                                - (2 * padding)
+                                                - ((rows - 1) * spacing)) / rows :
+                                0.;
 
     //qWarning() << "  cellWidth=" << cellWidth << " cellHeight=" << cellHeight;
 
@@ -482,8 +490,6 @@ void    TableGroupItem::initializeTableLayout()
                            (r * cellHeight) +
                            (spacing / 2.);
             horizontalBorder->setX(0.);
-            // FIXME #1756 BTW, ce serait peut-être bien aussi de normaliser
-            // width et heght en prevision merge...
             const auto borderY = y - borderHeight2;
             horizontalBorder->setSy(borderY / tableHeight);
             horizontalBorder->setWidth(tableWidth);
@@ -628,8 +634,8 @@ void    TableGroupItem::groupNodeItem(qan::NodeItem* nodeItem, qan::TableCell* g
 {
     //qWarning() << "qan::TableGroupItem::groupNodeItem(): nodeItem=" << nodeItem << "  groupCell=" << groupCell;
     // PRECONDITIONS:
-        // nodeItem can't be nullptr
-        // A 'container' must have been configured
+    // nodeItem can't be nullptr
+    // A 'container' must have been configured
     Q_UNUSED(groupCell)
     Q_UNUSED(transform)
     if (nodeItem == nullptr ||
@@ -708,10 +714,10 @@ void    TableGroupItem::mousePressEvent(QMouseEvent* event)
     qan::NodeItem::mousePressEvent(event);
 
     if (event->button() == Qt::LeftButton &&    // Selection management
-         getGroup() &&
-         isSelectable() &&
-         !getCollapsed() &&         // Locked/Collapsed group is not selectable
-         !getNode()->getLocked()) {
+        getGroup() &&
+        isSelectable() &&
+        !getCollapsed() &&         // Locked/Collapsed group is not selectable
+        !getNode()->getLocked()) {
         if (getGraph())
             getGraph()->selectGroup(*getGroup(), event->modifiers());
     }
