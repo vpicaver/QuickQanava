@@ -279,7 +279,7 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
 
 void    TableGroupItem::insertColumn()
 {
-    // FIXME #256
+    // FIXME #257
     // Create a new vertical border ?
     // Create new cells according to actual row count ?
 
@@ -316,20 +316,45 @@ void    TableGroupItem::insertColumn()
         if (prevBorder != nullptr) {
             prevBorder->setNextBorder(border);
             border->setX(prevBorder->x() + 25);
+            border->setSx(prevBorder->getSx() + 0.1);
             border->setHeight(prevBorder->height());
+            border->setWidth(3);   // FIXME #257 see borderWidth const
         }
     }
 
     // Create a column of cells
     auto cellComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableCell.qml",
                                            QQmlComponent::PreferSynchronous, nullptr);
-    auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*cellComponent));
-    if (cell != nullptr) {
-        _cells.push_back(cell);
+
+    // FIXME #257
+    // Instead of inserting new cells, probably better to replace the complete
+    // _cells container.
+    // But, existing cells must be placed at the correct size...
+    // Cell indexing: _cells[(r * cols) + c]
+
+    auto tableGroup = getTableGroup();
+    const auto oldCols = tableGroup->getCols();
+    const auto oldRows = tableGroup->getRows();
+    const auto newCols = oldCols + 1;
+    const auto newRows = oldRows;
+    Cells_t newCells;
+    newCells.resize(newCols * newRows);
+    // Copy old cells to new table
+    for (auto r = 0; r < oldRows; r++)
+        for (auto c = 0; c < oldRows; c++) {
+            newCells[(r*newCols) + c] = _cells[(r*oldCols) + c];
+        }
+    // Create new cells for new column
+    for (auto r=0; r < oldRows; r++) {
+        auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*cellComponent));
         cell->setParentItem(getContainer() != nullptr ? getContainer() : this);
         cell->setVisible(true);
         cell->setTable(getTableGroup());
+        newCells[(r*newCols) + (newCols - 1)] = cell;
     }
+    _cells = newCells;
+    tableGroup->setCols(newCols);
+
     cellComponent->deleteLater();
 }
 
