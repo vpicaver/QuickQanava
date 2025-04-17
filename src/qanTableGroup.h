@@ -105,6 +105,9 @@ public:
     //! Initialize a "default" layout.
     Q_INVOKABLE void    initializeLayout();
 
+    //! Insert (append) a new column in table.
+    Q_INVOKABLE void    insertColumn();
+
 public:
     //! \copydoc getRows()
     Q_PROPERTY(int rows READ getRows WRITE setRows NOTIFY rowsChanged FINAL)

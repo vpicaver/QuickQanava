@@ -287,26 +287,13 @@ qan::TableCell*   TableGroupItem::createCell()
 
 void    TableGroupItem::insertColumn()
 {
-    // FIXME #257
-    // Create a new vertical border ?
-    // Create new cells according to actual row count ?
-
-    // Open questions:
-    // Need for fatorization of border/cell component management...
-    // Need and insert method: with insert after/before support...
-    // Interactions with qan::TableGroup (for example to set cols+1) ?
-
+    // Algorithm:
+    // Create a new vertical border for the new column
+    // Create new cells for the new cols column count
     qWarning() << "qan::TableGroupItem::insertColumn()";
     qWarning() << "_verticalBorders.size()=" << _verticalBorders.size();
-    auto engine = qmlEngine(this);
-    if (engine == nullptr) {
-        qWarning() << "qan::TableGroupItem::initializeBorders(): Error, no QML engine.";
-        return;
-    }
     qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
-    qWarning() << "prevBorder=" << prevBorder;
     auto border = createBorder();
-    qWarning() << "border=" << border;
     if (border != nullptr) {
         border->setOrientation(Qt::Vertical);
         border->setPrevBorder(prevBorder);
@@ -316,16 +303,13 @@ void    TableGroupItem::insertColumn()
             border->setX(prevBorder->x() + 25);
             border->setSx(prevBorder->getSx() + 0.1);
             border->setHeight(prevBorder->height());
-            border->setWidth(3);   // FIXME #257 see borderWidth const
+            border->setWidth(3);
         }
     }
 
-    // FIXME #257
-    // Instead of inserting new cells, probably better to replace the complete
-    // _cells container.
-    // But, existing cells must be placed at the correct size...
-    // Cell indexing: _cells[(r * cols) + c]
-
+    // Update the _cells array, be very carefull there is a mapping from
+    // old table layout to new layout. Done in 2 phase: copy old cells
+    // to the new layout, then initialize new cells in the new column
     auto tableGroup = getTableGroup();
     const auto oldCols = tableGroup->getCols();
     const auto oldRows = tableGroup->getRows();
@@ -333,13 +317,10 @@ void    TableGroupItem::insertColumn()
     const auto newRows = oldRows;
     Cells_t newCells;
     newCells.resize(newCols * newRows);
-    // Copy old cells to new table
-    for (auto r = 0; r < oldRows; r++)
-        for (auto c = 0; c < oldRows; c++) {
+    for (auto r = 0; r < oldRows; r++)  // Copy old cells to new table
+        for (auto c = 0; c < oldRows; c++)
             newCells[(r*newCols) + c] = _cells[(r*oldCols) + c];
-        }
-    // Create new cells for new column
-    for (auto r=0; r < oldRows; r++) {
+    for (auto r=0; r < oldRows; r++) {  // Create new cells for new column
         auto cell = createCell();
         newCells[(r*newCols) + (newCols - 1)] = cell;
     }

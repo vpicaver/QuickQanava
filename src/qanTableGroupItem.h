@@ -84,7 +84,7 @@ public:
 
     //! Initialize a table withe default cells and borders.
     void        initialize(int cols, int rows);
-protected:
+public:
     void        initializeCells(int cellsCount);
     void        initializeBorders(int verticalBordersCount, int horizontalBordersCount);
 
