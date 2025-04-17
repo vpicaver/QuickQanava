@@ -184,7 +184,14 @@ ApplicationWindow {
                 text: "Append column"
                 enabled: contextMenu.group?.isTable || false
                 onClicked: {
-                    contextMenu.group.item.insertColumn()
+                    contextMenu.group.insertColumn()
+                }
+            }
+            MenuItem {
+                text: "Append row"
+                enabled: contextMenu.group?.isTable || false
+                onClicked: {
+                    contextMenu.group.insertRow()
                 }
             }
             MenuSeparator { }

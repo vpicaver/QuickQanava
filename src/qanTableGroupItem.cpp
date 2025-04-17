@@ -301,7 +301,7 @@ void    TableGroupItem::insertColumn()
         if (prevBorder != nullptr) {
             prevBorder->setNextBorder(border);
             border->setX(prevBorder->x() + 25);
-            border->setSx(prevBorder->getSx() + 0.1);
+            border->setSx((1. - prevBorder->getSx()) / 2.1);
             border->setHeight(prevBorder->height());
             border->setWidth(3);
         }
@@ -326,6 +326,48 @@ void    TableGroupItem::insertColumn()
     }
     _cells = newCells;
     tableGroup->setCols(newCols);
+}
+
+void    TableGroupItem::insertRow()
+{
+    // Algorithm:
+    // Create a new horizontal border for the new row
+    // Create new cells for the new row
+    qWarning() << "qan::TableGroupItem::insertRow()";
+    qWarning() << "_horizontalBorders.size()=" << _horizontalBorders.size();
+    qan::TableBorder* prevBorder = _horizontalBorders.empty() ? nullptr : _horizontalBorders.back();
+    auto border = createBorder();
+    if (border != nullptr) {
+        border->setOrientation(Qt::Horizontal);
+        border->setPrevBorder(prevBorder);
+        _horizontalBorders.push_back(border);
+        if (prevBorder != nullptr) {
+            prevBorder->setNextBorder(border);
+            border->setY(prevBorder->y() + 25);
+            border->setSy((1. - prevBorder->getSy()) / 2.1);
+            border->setWidth(prevBorder->width());
+            border->setHeight(3);
+        }
+    }
+
+    // Update the _cells array, be very carefull there is a mapping from
+    // old table layout to new layout. Done in 2 phase: copy old cells
+    // to the new layout, then initialize new cells in the new column
+    auto tableGroup = getTableGroup();
+    const auto oldCols = tableGroup->getCols();
+    const auto oldRows = tableGroup->getRows();
+    const auto newCols = oldCols;
+    const auto newRows = oldRows + 1;
+    Cells_t newCells;
+    newCells.resize(newCols * newRows);
+    // No need to map since the cells are "appended" (see insertColumn()).
+    std::copy(_cells.begin(), _cells.end(), newCells.begin());
+    for (auto c = 0; c < newCols; c++) {  // Create new cells for new row
+        auto cell = createCell();
+        newCells[((newRows - 1) * newCols) + c] = cell;
+    }
+    _cells = newCells;
+    tableGroup->setRows(newRows);
 }
 
 auto TableGroupItem::createFromComponent(QQmlComponent& component) -> QQuickItem*
@@ -454,9 +496,7 @@ void    TableGroupItem::initializeTableLayout()
     // it will be called automatically when border are moved.
     // Note 20230406: In fact calling layout cell is necessary for rows==1, cols==1
     // table that need special handling to dimension cells since there is no horiz/vert borders.
-    // FIXME #1756
     layoutTable();
-    //layoutCells();
 }
 
 void    TableGroupItem::layoutTable()

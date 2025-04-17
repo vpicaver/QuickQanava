@@ -117,6 +117,13 @@ void    TableGroup::insertColumn()
         tableGroupItem->insertColumn();
 }
 
+void    TableGroup::insertRow()
+{
+    auto tableGroupItem = qobject_cast<qan::TableGroupItem*>(getItem());
+    if (tableGroupItem)
+        tableGroupItem->insertRow();
+}
+
 bool    TableGroup::setRows(int rows)
 {
     if (rows != _rows) {

@@ -102,8 +102,10 @@ private:
     inline static QQmlComponent* _cellComponent = nullptr;
 
 public:
-    //! Insert a column FIXME #257 should not be qinvokable ?
-    Q_INVOKABLE void        insertColumn();
+    //! Insert (append) a column.
+    void        insertColumn();
+    //! Insert (append) a row.
+    void        insertRow();
 
 protected:
     auto        createFromComponent(QQmlComponent& component) -> QQuickItem*;
