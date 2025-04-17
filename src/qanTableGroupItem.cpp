@@ -184,19 +184,11 @@ void    TableGroupItem::createCells(int cellsCount)
     }
 
     // Create cells
-    auto cellComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableCell.qml",
-                                           QQmlComponent::PreferSynchronous, nullptr);
     for (auto c = 0; c < cellsCount; c++) {
-        auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*cellComponent));
-        if (cell != nullptr) {
+        auto cell = createCell();
+        if (cell != nullptr)
             _cells.push_back(cell);
-            cell->setParentItem(getContainer() != nullptr ? getContainer() : this);
-            cell->setVisible(true);
-            cell->setTable(getTableGroup());
-        }
     }
-
-    cellComponent->deleteLater();
 }
 
 void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBordersCount)
@@ -269,6 +261,30 @@ qan::TableBorder*   TableGroupItem::createBorder()
     return border;
 }
 
+
+qan::TableCell*   TableGroupItem::createCell()
+{
+    if (TableGroupItem::_cellComponent == nullptr) {
+        auto engine = qmlEngine(this);
+        if (engine == nullptr) {
+            qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
+            return nullptr;
+        }
+        // Component is parented to graph, will be destroyed when graph is destroyed
+        TableGroupItem::_cellComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableCell.qml",
+                                                           QQmlComponent::PreferSynchronous, nullptr);
+    }
+    if (!TableGroupItem::_cellComponent)
+        return nullptr;
+    auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*TableGroupItem::_cellComponent));
+    if (cell != nullptr) {
+        cell->setParentItem(getContainer() != nullptr ? getContainer() : this);
+        cell->setVisible(true);
+        cell->setTable(getTableGroup());
+    }
+    return cell;
+}
+
 void    TableGroupItem::insertColumn()
 {
     // FIXME #257
@@ -304,10 +320,6 @@ void    TableGroupItem::insertColumn()
         }
     }
 
-    // Create a column of cells
-    auto cellComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableCell.qml",
-                                           QQmlComponent::PreferSynchronous, nullptr);
-
     // FIXME #257
     // Instead of inserting new cells, probably better to replace the complete
     // _cells container.
@@ -328,16 +340,11 @@ void    TableGroupItem::insertColumn()
         }
     // Create new cells for new column
     for (auto r=0; r < oldRows; r++) {
-        auto cell = qobject_cast<qan::TableCell*>(createFromComponent(*cellComponent));
-        cell->setParentItem(getContainer() != nullptr ? getContainer() : this);
-        cell->setVisible(true);
-        cell->setTable(getTableGroup());
+        auto cell = createCell();
         newCells[(r*newCols) + (newCols - 1)] = cell;
     }
     _cells = newCells;
     tableGroup->setCols(newCols);
-
-    cellComponent->deleteLater();
 }
 
 auto TableGroupItem::createFromComponent(QQmlComponent& component) -> QQuickItem*

@@ -90,11 +90,17 @@ public:
     void        createBorders(int verticalBordersCount, int horizontalBordersCount);
 
 protected:
-    //! Factory of TableBorder.qml components, return nullptr on error, border is returned configured.
+    //! Factory of TableBorder.qml components, return nullptr on error, border is returned partially configured.
     qan::TableBorder*   createBorder();
 private:
     // TableBorder.qml component cache.
     inline static QQmlComponent* _borderComponent = nullptr;
+protected:
+    //! Factory of TableCell.qml components, return nullptr on error, cell is returned partially configured.
+    qan::TableCell*     createCell();
+private:
+    // TableCell.qml component cache.
+    inline static QQmlComponent* _cellComponent = nullptr;
 
 public:
     //! Insert a column FIXME #257 should not be qinvokable ?
