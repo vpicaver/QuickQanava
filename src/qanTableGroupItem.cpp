@@ -124,9 +124,6 @@ void    TableGroupItem::initialize(int cols, int rows)
     clearLayout();
     createCells(rows * cols);  // Create cells
 
-    auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
-                                             QQmlComponent::PreferSynchronous, nullptr);
-
     // Notes:
     // - There is no "exterior" borders:
     //    - So there is  cols-1 vertical borders
@@ -165,8 +162,6 @@ void    TableGroupItem::initialize(int cols, int rows)
         }
         r++;
     }
-
-    borderComponent->deleteLater();
 
     // Note 20240830: Do not call initializeTableLayout(),
     // it is up to the user to do that, it might not be
@@ -212,36 +207,15 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
         qWarning() << "TableGroupItem::createBorders(): Error, invalid vertical or horizontal borders count.";
         return;
     }
-    // FIXME #257
-    // auto engine = qmlEngine(this);
-    // if (engine == nullptr) {
-    //     qWarning() << "qan::TableGroupItem::createBorders(): Error, no QML engine.";
-    //     return;
-    // }
-    // const auto borderComponent = new QQmlComponent(engine, "qrc:/QuickQanava/TableBorder.qml",
-    //                                                QQmlComponent::PreferSynchronous, nullptr);
 
     qan::TableBorder* prevBorder = nullptr;
     if (verticalBordersCount != static_cast<int>(_verticalBorders.size())) {
         for (auto v = 0; v < verticalBordersCount; v++) {
-            //auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
             auto border = createBorder();
             if (border != nullptr) {
-                //border->setTableGroup(getTableGroup());
                 border->setOrientation(Qt::Vertical);
-                //border->setParentItem(getContainer() != nullptr ? getContainer() : this);
-                //border->setVisible(true);
                 border->setPrevBorder(prevBorder);
-                // connect(border, &qan::TableBorder::modified,
-                //         this,   [this]() {
-                //     const auto graph = this->getGraph();
-                //     const auto tableGroup = this->getTableGroup();
-                //     if (graph != nullptr &&
-                //         tableGroup != nullptr)
-                //     emit graph->tableModified(tableGroup);
-                // });
                 _verticalBorders.push_back(border);
-
                 if (prevBorder != nullptr)  // Audacious initialization of prevBorder nextBorder
                     prevBorder->setNextBorder(border);  // with this border
                 prevBorder = border;
@@ -251,34 +225,17 @@ void    TableGroupItem::createBorders(int verticalBordersCount, int horizontalBo
     prevBorder = nullptr;
     if (horizontalBordersCount != static_cast<int>(_horizontalBorders.size())) {
         for (auto h = 0; h < horizontalBordersCount; h++) {
-            // FIXME #257
-            //auto border = qobject_cast<qan::TableBorder*>(createFromComponent(*borderComponent));
             auto border = createBorder();
             if (border != nullptr) {
-                //border->setTableGroup(getTableGroup());
                 border->setOrientation(Qt::Horizontal);
-                //border->setParentItem(getContainer() != nullptr ? getContainer() : this);
-                //border->setVisible(true);
                 border->setPrevBorder(prevBorder);
-                // connect(border, &qan::TableBorder::modified,
-                //         this,   [this]() {
-                //     const auto graph = this->getGraph();
-                //     const auto tableGroup = this->getTableGroup();
-                //     if (graph != nullptr &&
-                //         tableGroup != nullptr)
-                //     emit graph->tableModified(tableGroup);
-                // });
                 _horizontalBorders.push_back(border);
-
                 if (prevBorder != nullptr)  // Audacious initialization of prevBorder nextBorder
                     prevBorder->setNextBorder(border);  // with this border
                 prevBorder = border;
             }
         }
     }
-
-    // FIXME #257
-    //borderComponent->deleteLater();
 }
 
 qan::TableBorder*   TableGroupItem::createBorder()

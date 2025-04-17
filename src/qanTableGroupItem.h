@@ -90,8 +90,10 @@ public:
     void        createBorders(int verticalBordersCount, int horizontalBordersCount);
 
 protected:
+    //! Factory of TableBorder.qml components, return nullptr on error, border is returned configured.
     qan::TableBorder*   createBorder();
-
+private:
+    // TableBorder.qml component cache.
     inline static QQmlComponent* _borderComponent = nullptr;
 
 public:
