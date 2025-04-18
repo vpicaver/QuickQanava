@@ -110,6 +110,7 @@ void    TableGroupItem::clearLayout()
 void    TableGroupItem::initialize(int cols, int rows)
 {
     //qWarning() << "qan::TableGroupItem::initialize(): rows=" << rows << "  cols=" << cols;
+    //qWarning() << "  tablegroup rows=" << getTableGroup()->getRows() << "  cols=" << getTableGroup()->getCols();
     //qWarning() << "  container=" << getContainer();
     if (rows <= 0 || cols <= 0) {
         qWarning() << "TableGroupItem::initialize(): Error, invalid rows or cols count.";
@@ -141,27 +142,7 @@ void    TableGroupItem::initialize(int cols, int rows)
     // So cell index in _cells at (col=c, row=r) is _cells[(r * cols) + c]
 
     initializeBorders(cols - 1, rows - 1);
-    int c = 1;
-    for (auto verticalBorder: _verticalBorders) {
-        if (verticalBorder == nullptr)
-            continue;
-        for (int r = 0; r < rows; r++) {
-            verticalBorder->addPrevCell(_cells[(r * cols) + c - 1]);
-            verticalBorder->addNextCell(_cells[(r * cols) + c]);
-        }
-        c++;
-    }
-
-    int r = 1;
-    for (auto horizontalBorder: _horizontalBorders) {
-        if (horizontalBorder == nullptr)
-            continue;
-        for (int c = 0; c < cols; c++) {
-            horizontalBorder->addPrevCell(_cells[((r-1) * cols) + c]);
-            horizontalBorder->addNextCell(_cells[(r * cols)     + c]);
-        }
-        r++;
-    }
+    initializeCellsLinks();  // Link borders and cells
 
     // Note 20240830: Do not call initializeTableLayout(),
     // it is up to the user to do that, it might not be
