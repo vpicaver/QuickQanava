@@ -176,13 +176,11 @@ void    TableGroupItem::initializeCells(int cellsCount)
     }
     if (cellsCount == static_cast<int>(_cells.size()))
         return;
-
     auto engine = qmlEngine(this);
     if (engine == nullptr) {
         qWarning() << "qan::TableGroupItem::initializeCells(): Error, no QML engine.";
         return;
     }
-
     // Create cells
     for (auto c = 0; c < cellsCount; c++) {
         auto cell = createCell();
@@ -227,6 +225,37 @@ void    TableGroupItem::initializeBorders(int verticalBordersCount, int horizont
                 prevBorder = border;
             }
         }
+    }
+}
+
+void    TableGroupItem::initializeCellsLinks()
+{
+    auto tableGroup = getTableGroup();
+    if (tableGroup == nullptr)
+        return;
+    const auto rows = tableGroup->getRows();
+    const auto cols = tableGroup->getCols();
+    if (_cells.size() != (rows * cols))
+        return;
+    int c = 1;
+    for (auto verticalBorder: _verticalBorders) {
+        if (verticalBorder == nullptr)
+            continue;
+        for (int r = 0; r < rows; r++) {
+            verticalBorder->addPrevCell(_cells[(r * cols) + c - 1]);
+            verticalBorder->addNextCell(_cells[(r * cols) + c]);
+        }
+        c++;
+    }
+    int r = 1;
+    for (auto horizontalBorder: _horizontalBorders) {
+        if (horizontalBorder == nullptr)
+            continue;
+        for (int c = 0; c < cols; c++) {
+            horizontalBorder->addPrevCell(_cells[((r-1) * cols) + c]);
+            horizontalBorder->addNextCell(_cells[(r * cols)     + c]);
+        }
+        r++;
     }
 }
 
@@ -294,6 +323,9 @@ void    TableGroupItem::insertColumn()
     const auto container = getContainer();
     if (container == nullptr)
         return;
+    auto tableGroup = getTableGroup();
+    if (tableGroup == nullptr)
+        return;
     qan::TableBorder* prevBorder = _verticalBorders.empty() ? nullptr : _verticalBorders.back();
     if (prevBorder == nullptr)
         return;
@@ -314,7 +346,6 @@ void    TableGroupItem::insertColumn()
     // Update the _cells array, be very carefull there is a mapping from
     // old table layout to new layout. Done in 2 phase: copy old cells
     // to the new layout, then initialize new cells in the new column
-    auto tableGroup = getTableGroup();
     const auto oldCols = tableGroup->getCols();
     const auto oldRows = tableGroup->getRows();
     const auto newCols = oldCols + 1;
@@ -326,10 +357,14 @@ void    TableGroupItem::insertColumn()
             newCells[(r * newCols) + c] = _cells[(r * oldCols) + c];
     for (auto r = 0; r < oldRows; r++) {  // Create new cells for new column
         auto cell = createCell();
+        qWarning() << "cell=" << cell;
         newCells[(r * newCols) + (newCols - 1)] = cell;
     }
     _cells = newCells;
     tableGroup->setCols(newCols);
+    // Initialize links between border and cells, then layout cells with valid size
+    initializeCellsLinks();
+    layoutCells();
 }
 
 void    TableGroupItem::insertRow()
@@ -340,6 +375,9 @@ void    TableGroupItem::insertRow()
     // qWarning() << "qan::TableGroupItem::insertRow()";
     const auto container = getContainer();
     if (container == nullptr)
+        return;
+    auto tableGroup = getTableGroup();
+    if (tableGroup == nullptr)
         return;
     qan::TableBorder* prevBorder = _horizontalBorders.empty() ? nullptr : _horizontalBorders.back();
     if (prevBorder == nullptr)
@@ -361,7 +399,6 @@ void    TableGroupItem::insertRow()
     // Update the _cells array, be very carefull there is a mapping from
     // old table layout to new layout. Done in 2 phase: copy old cells
     // to the new layout, then initialize new cells in the new column
-    auto tableGroup = getTableGroup();
     const auto oldCols = tableGroup->getCols();
     const auto oldRows = tableGroup->getRows();
     const auto newCols = oldCols;
@@ -376,6 +413,9 @@ void    TableGroupItem::insertRow()
     }
     _cells = newCells;
     tableGroup->setRows(newRows);
+    // Initialize links between border and cells, then layout cells with valid size
+    initializeCellsLinks();
+    layoutCells();
 }
 
 auto TableGroupItem::createFromComponent(QQmlComponent& component) -> QQuickItem*
@@ -419,7 +459,7 @@ void    TableGroupItem::initializeTableLayout()
     const auto tableWidth = tableContainer->width();
     const auto tableHeight = tableContainer->height();
     const auto tableSize = tableContainer->size();
-    qWarning() << "qan::TableGroupItem::initializeTableLayout(): tableSize=" << tableSize;
+    //qWarning() << "qan::TableGroupItem::initializeTableLayout(): tableSize=" << tableSize;
     if (qRound(tableWidth) <= 0 || qRound(tableHeight) <= 0)
         return;
 

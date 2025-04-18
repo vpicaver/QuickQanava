@@ -87,6 +87,9 @@ public:
 public:
     void        initializeCells(int cellsCount);
     void        initializeBorders(int verticalBordersCount, int horizontalBordersCount);
+protected:
+    //! Initialize the links between .
+    void        initializeCellsLinks();
 
 protected:
     //! Factory of TableBorder.qml components, return nullptr on error, border is returned partially configured.
