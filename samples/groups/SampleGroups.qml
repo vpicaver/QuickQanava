@@ -125,7 +125,7 @@ ApplicationWindow {
             groupEditor.group = undefined
             contextMenu.node = undefined
         }
-        onRightClicked: {
+        onRightClicked: (pos) => {
             contextMenu.x = pos.x
             contextMenu.y = pos.y
             contextMenu.open()
@@ -177,6 +177,21 @@ ApplicationWindow {
                 onClicked: {
                     topology.removeGroup(contextMenu.group, true)
                     contextMenu.group = undefined
+                }
+            }
+            MenuSeparator { }
+            MenuItem {
+                text: "Append column"
+                enabled: contextMenu.group?.isTable || false
+                onClicked: {
+                    contextMenu.group.insertColumn()
+                }
+            }
+            MenuItem {
+                text: "Append row"
+                enabled: contextMenu.group?.isTable || false
+                onClicked: {
+                    contextMenu.group.insertRow()
                 }
             }
             MenuSeparator { }

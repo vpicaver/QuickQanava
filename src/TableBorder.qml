@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	TableBorder.qml
+// \file    TableBorder.qml
 // \author	benoit@destrat.io
-// \date	2022 01 26
+// \date    2022 01 26
 //-----------------------------------------------------------------------------
 
 import QtQuick

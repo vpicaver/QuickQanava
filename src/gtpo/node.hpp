@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the GTpo software.
 //
-// \file	node.hpp
+// \file    node.hpp
 // \author	benoit@destrat.io
-// \date	2016 01 22
+// \date    2016 01 22
 //-----------------------------------------------------------------------------
 
 namespace gtpo { // ::gtpo

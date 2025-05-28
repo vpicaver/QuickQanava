@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	LabelEditor.qml
+// \file    LabelEditor.qml
 // \author	benoit@destrat.io
-// \date	2015 11 30
+// \date    2015 11 30
 //-----------------------------------------------------------------------------
 
 import QtQuick

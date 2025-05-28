@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanOrgTreeLayout.h
+// \file    qanOrgTreeLayout.h
 // \author	benoit@destrat.io
-// \date	2024 08 13
+// \date    2024 08 13
 //-----------------------------------------------------------------------------
 
 // Std headers

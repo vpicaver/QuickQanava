@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the GTpo software library.
 //
-// \file	graph_property.h
+// \file    graph_property.h
 // \author	benoit@destrat.io
-// \date	2018 06 25
+// \date    2018 06 25
 //-----------------------------------------------------------------------------
 
 #pragma once

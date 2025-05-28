@@ -25,9 +25,9 @@
 */
 
 //-----------------------------------------------------------------------------
-// \file	qanAnalysisTimeHeatMap.cpp
+// \file    qanAnalysisTimeHeatMap.cpp
 // \author	benoit@destrat.io
-// \date	2017 06 04
+// \date    2017 06 04
 //-----------------------------------------------------------------------------
 
 // Qt headers

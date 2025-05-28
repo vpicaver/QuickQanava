@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanNavigablePreview.h
+// \file    qanNavigablePreview.h
 // \author	benoit@destrat.io
-// \date	2017 06 02
+// \date    2017 06 02
 //-----------------------------------------------------------------------------
 
 #pragma once

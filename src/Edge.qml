@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	Edge.qml
+// \file    Edge.qml
 // \author	benoit@destrat.io
-// \date	2016 09 04
+// \date    2016 09 04
 //-----------------------------------------------------------------------------
 
 import QtQuick

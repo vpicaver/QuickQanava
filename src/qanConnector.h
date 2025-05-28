@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanConnector.h
+// \file    qanConnector.h
 // \author	benoit@destrat.io
-// \date	2017 03 10
+// \date    2017 03 10
 //-----------------------------------------------------------------------------
 
 #pragma once

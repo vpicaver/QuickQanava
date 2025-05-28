@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	container_adapter.h
+// \file    container_adapter.h
 // \author	benoit@destrat.io
-// \date	2017 03 04
+// \date    2017 03 04
 //-----------------------------------------------------------------------------
 
 #pragma once

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanBottomRightResizer.h
+// \file    qanBottomRightResizer.h
 // \author	benoit@destrat.io
-// \date	2016 07 08
+// \date    2016 07 08
 //-----------------------------------------------------------------------------
 
 #pragma once

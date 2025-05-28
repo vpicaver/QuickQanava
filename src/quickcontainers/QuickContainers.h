@@ -29,7 +29,7 @@
 //
 // \file    QuickContainer.h
 // \author	benoit@destrat.io
-// \date	2012 02 08
+// \date    2012 02 08
 //-----------------------------------------------------------------------------
 
 #pragma once

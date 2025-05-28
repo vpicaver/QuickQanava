@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanBottomResizer.cpp
+// \file    qanBottomResizer.cpp
 // \author	benoit@destrat.io
-// \date	2022 10 09
+// \date    2022 10 09
 //-----------------------------------------------------------------------------
 
 // Qt headers
@@ -216,7 +216,7 @@ void    BottomResizer::mousePressEvent(QMouseEvent* event)
     if (!isVisible())
         return;
     if (_target) {
-        _dragInitialPos = event->windowPos();
+        _dragInitialPos = event->scenePosition();
         _targetInitialSize = {_target->width(), _target->height()};
         emit resizeStart(_target ? QSizeF{_target->width(), _target->height()} :  // Use of target ok.
                                   QSizeF{});

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanTableGroup.cpp
+// \file    qanTableGroup.cpp
 // \author	benoit@destrat.io
-// \date	2023 01 25
+// \date    2023 01 25
 //-----------------------------------------------------------------------------
 
 // Qt headers
@@ -108,6 +108,20 @@ void    TableGroup::initializeLayout()
     auto tableGroupItem = qobject_cast<qan::TableGroupItem*>(getItem());
     if (tableGroupItem)
         tableGroupItem->initializeTableLayout();
+}
+
+void    TableGroup::insertColumn()
+{
+    auto tableGroupItem = qobject_cast<qan::TableGroupItem*>(getItem());
+    if (tableGroupItem)
+        tableGroupItem->insertColumn();
+}
+
+void    TableGroup::insertRow()
+{
+    auto tableGroupItem = qobject_cast<qan::TableGroupItem*>(getItem());
+    if (tableGroupItem)
+        tableGroupItem->insertRow();
 }
 
 bool    TableGroup::setRows(int rows)

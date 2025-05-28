@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	GraphView.qml
+// \file    GraphView.qml
 // \author	benoit@destrat.io
-// \date	2015 08 01
+// \date    2015 08 01
 //-----------------------------------------------------------------------------
 
 import QtQuick

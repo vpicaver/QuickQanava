@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the GTpo software library.
 //
-// \file	edge.h
+// \file    edge.h
 // \author	benoit@destrat.io
-// \date	2017 03 04
+// \date    2017 03 04
 //-----------------------------------------------------------------------------
 
 #pragma once

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	RectGradientShadowBackground.qml
+// \file    RectGradientShadowBackground.qml
 // \author	benoit@destrat.io
-// \date	2018 03 25
+// \date    2018 03 25
 //-----------------------------------------------------------------------------
 
 import QtQuick

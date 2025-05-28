@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the GTpo software library.
 //
-// \file	observer.h
+// \file    observer.h
 // \author	benoit@destrat.io
-// \date	2016 02 08
+// \date    2016 02 08
 //-----------------------------------------------------------------------------
 
 #pragma once

@@ -84,9 +84,31 @@ public:
 
     //! Initialize a table withe default cells and borders.
     void        initialize(int cols, int rows);
+public:
+    void        initializeCells(int cellsCount);
+    void        initializeBorders(int verticalBordersCount, int horizontalBordersCount);
+protected:
+    //! Initialize the links between .
+    void        initializeCellsLinks();
 
-    void        createCells(int cellsCount);
-    void        createBorders(int verticalBordersCount, int horizontalBordersCount);
+protected:
+    //! Factory of TableBorder.qml components, return nullptr on error, border is returned partially configured.
+    qan::TableBorder*   createBorder();
+private:
+    // TableBorder.qml component cache.
+    inline static QQmlComponent* _borderComponent = nullptr;
+protected:
+    //! Factory of TableCell.qml components, return nullptr on error, cell is returned partially configured.
+    qan::TableCell*     createCell();
+private:
+    // TableCell.qml component cache.
+    inline static QQmlComponent* _cellComponent = nullptr;
+
+public:
+    //! Insert (append) a column.
+    void        insertColumn();
+    //! Insert (append) a row.
+    void        insertRow();
 
 protected:
     auto        createFromComponent(QQmlComponent& component) -> QQuickItem*;

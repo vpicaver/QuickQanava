@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanGraphView.h
+// \file    qanGraphView.h
 // \author	benoit@destrat.io
-// \date	2016 08 15
+// \date    2016 08 15
 //-----------------------------------------------------------------------------
 
 #pragma once

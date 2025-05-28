@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanPortItem.cpp
+// \file    qanPortItem.cpp
 // \author	benoit@destrat.io
-// \date	2017 08 10
+// \date    2017 08 10
 //-----------------------------------------------------------------------------
 
 // Qt headers

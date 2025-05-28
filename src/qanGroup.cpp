@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanGroup.cpp
+// \file    qanGroup.cpp
 // \author	benoit@destrat.io
-// \date	2016 03 22
+// \date    2016 03 22
 //-----------------------------------------------------------------------------
 
 // Qt headers
@@ -58,7 +58,7 @@ std::unordered_set<qan::Edge*>  Group::collectAdjacentEdges() const
 {
     std::unordered_set<qan::Edge*> edges = qan::Node::collectAdjacentEdges();
     if (is_group()) {
-        for (const auto groupNode: qAsConst(group_nodes())) {
+        for (const auto groupNode: std::as_const(group_nodes())) {
             if (groupNode != nullptr) {
                 const auto qanGroupNode = qobject_cast<qan::Group*>(groupNode);
                 if (qanGroupNode != nullptr) {

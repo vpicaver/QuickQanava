@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the GTpo software library.
 //
-// \file	node.h
+// \file    node.h
 // \author	benoit@destrat.io
-// \date	2016 01 22
+// \date    2016 01 22
 //-----------------------------------------------------------------------------
 
 #pragma once
