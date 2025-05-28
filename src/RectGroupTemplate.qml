@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	RectGroupTemplate.qml
+// \file    RectGroupTemplate.qml
 // \author	benoit@destrat.io
-// \date	2016 06 21
+// \date    2016 06 21
 //-----------------------------------------------------------------------------
 
 import QtQuick

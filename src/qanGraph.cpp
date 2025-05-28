@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanGraph.cpp
+// \file    qanGraph.cpp
 // \author	benoit@destrat.io
-// \date	2004 February 15
+// \date    2004 February 15
 //-----------------------------------------------------------------------------
 
 // Std headers

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanTableGroupItem.cpp
+// \file    qanTableGroupItem.cpp
 // \author	benoit@destrat.io
-// \date	2023 01 26
+// \date    2023 01 26
 //-----------------------------------------------------------------------------
 
 // QuickQanava headers

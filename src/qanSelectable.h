@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanSelectable.h
+// \file    qanSelectable.h
 // \author	benoit@destrat.io
-// \date	2017 03 15
+// \date    2017 03 15
 //-----------------------------------------------------------------------------
 
 #pragma once

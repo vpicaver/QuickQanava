@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanGrid.h
+// \file    qanGrid.h
 // \author	benoit@destrat.io
-// \date	2017 01 29
+// \date    2017 01 29
 //-----------------------------------------------------------------------------
 
 #pragma once

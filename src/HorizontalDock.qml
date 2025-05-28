@@ -26,9 +26,9 @@
 
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
-// \file	HorizontalDock.qml
+// \file    HorizontalDock.qml
 // \author	benoit@destrat.io
-// \date	2017 08 28
+// \date    2017 08 28
 //-----------------------------------------------------------------------------
 import QtQuick
 import QtQuick.Layouts

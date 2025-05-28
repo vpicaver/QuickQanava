@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanEdgeItem.cpp
+// \file    qanEdgeItem.cpp
 // \author	benoit@destrat.io
-// \date	2017 03 02
+// \date    2017 03 02
 //-----------------------------------------------------------------------------
 
 // Qt headers

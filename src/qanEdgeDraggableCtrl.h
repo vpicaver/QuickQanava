@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanEdgeDraggableCtrl.h
+// \file    qanEdgeDraggableCtrl.h
 // \author	benoit@destrat.io
-// \date	2021 10 29
+// \date    2021 10 29
 //-----------------------------------------------------------------------------
 
 #pragma once

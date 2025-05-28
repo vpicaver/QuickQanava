@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	VerticalDock.qml
+// \file    VerticalDock.qml
 // \author	benoit@destrat.io
-// \date	2017 08 28
+// \date    2017 08 28
 //-----------------------------------------------------------------------------
 
 import QtQuick

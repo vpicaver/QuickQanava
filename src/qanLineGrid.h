@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava library. Copyright 2016 Benoit AUTHEMAN.
 //
-// \file	qanLineGrid.h
+// \file    qanLineGrid.h
 // \author	benoit@destrat.io
-// \date	2019 11 09 (initial code 2017 01 29)
+// \date    2019 11 09 (initial code 2017 01 29)
 //-----------------------------------------------------------------------------
 
 #pragma once

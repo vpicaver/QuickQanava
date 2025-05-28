@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanBehaviour.cpp
+// \file    qanBehaviour.cpp
 // \author	benoit@destrat.io
-// \date	2016 04 04
+// \date    2016 04 04
 //-----------------------------------------------------------------------------
 
 // QuickQanava headers

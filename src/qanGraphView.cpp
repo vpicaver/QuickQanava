@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanGraphView.cpp
+// \file    qanGraphView.cpp
 // \author	benoit@destrat.io
-// \date	2016 08 15
+// \date    2016 08 15
 //-----------------------------------------------------------------------------
 
 // Qt headers

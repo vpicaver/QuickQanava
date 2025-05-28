@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	SelectionItem.qml
+// \file    SelectionItem.qml
 // \author	benoit@destrat.io
-// \date	2015 06 16
+// \date    2015 06 16
 // Contributed by @Jackneill 20170930
 //-----------------------------------------------------------------------------
 

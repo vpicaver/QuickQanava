@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanSelectable.cpp
+// \file    qanSelectable.cpp
 // \author	benoit@destrat.io
-// \date	2016 03 15
+// \date    2016 03 15
 //-----------------------------------------------------------------------------
 
 // QuickQanava headers

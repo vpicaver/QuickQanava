@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanDraggableCtrl.cpp
+// \file    qanDraggableCtrl.cpp
 // \author	benoit@destrat.io
-// \date	2017 03 15
+// \date    2017 03 15
 //-----------------------------------------------------------------------------
 
 // QuickQanava headers

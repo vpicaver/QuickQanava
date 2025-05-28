@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanEdgeItem.h
+// \file    qanEdgeItem.h
 // \author	benoit@destrat.io
-// \date	2016 03 04
+// \date    2016 03 04
 //-----------------------------------------------------------------------------
 
 #pragma once

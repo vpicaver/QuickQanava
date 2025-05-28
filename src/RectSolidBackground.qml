@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	RectSolidBackground.qml
+// \file    RectSolidBackground.qml
 // \author	benoit@destrat.io
-// \date	2017 11 17
+// \date    2017 11 17
 //-----------------------------------------------------------------------------
 
 import QtQuick

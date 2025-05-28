@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanLineGrid.cpp
+// \file    qanLineGrid.cpp
 // \author	benoit@destrat.io
-// \date	2019 11 09 (initial code 2017 01 29)
+// \date    2019 11 09 (initial code 2017 01 29)
 //-----------------------------------------------------------------------------
 
 // Std headers

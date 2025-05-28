@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanNavigablePreview.cpp
+// \file    qanNavigablePreview.cpp
 // \author	benoit@destrat.io
-// \date	2017 06 02
+// \date    2017 06 02
 //-----------------------------------------------------------------------------
 
 // QuickQanava headers

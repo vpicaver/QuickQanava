@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanNodeItem.cpp
+// \file    qanNodeItem.cpp
 // \author	benoit@destrat.io
-// \date	2016 03 04
+// \date    2016 03 04
 //-----------------------------------------------------------------------------
 
 // Std headers

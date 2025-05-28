@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanStyle.cpp
+// \file    qanStyle.cpp
 // \author	benoit@destrat.io
-// \date	2015 06 05
+// \date    2015 06 05
 //-----------------------------------------------------------------------------
 
 // Qt headers

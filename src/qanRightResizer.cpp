@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanRightResizer.cpp
+// \file    qanRightResizer.cpp
 // \author	benoit@destrat.io
-// \date	2022 10 09
+// \date    2022 10 09
 //-----------------------------------------------------------------------------
 
 // Qt headers

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	LineGrid.qml
+// \file    LineGrid.qml
 // \author	benoit@destrat.io
-// \date	2017 11 16
+// \date    2017 11 16
 //-----------------------------------------------------------------------------
 
 import QtQuick

@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	OriginCross.qml
+// \file    OriginCross.qml
 // \author	benoit@destrat.io
-// \date	2024 08 23
+// \date    2024 08 23
 //-----------------------------------------------------------------------------
 
 import QtQuick

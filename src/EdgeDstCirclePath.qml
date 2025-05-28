@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	EdgeDstCirclePath.qml
+// \file    EdgeDstCirclePath.qml
 // \author	benoit@destrat.io
-// \date	2022 10 02
+// \date    2022 10 02
 //-----------------------------------------------------------------------------
 
 import QtQuick

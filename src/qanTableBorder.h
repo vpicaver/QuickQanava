@@ -27,9 +27,9 @@
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
 //
-// \file	qanTableBorder.h
+// \file    qanTableBorder.h
 // \author	benoit@destrat.io
-// \date	2023 01 26
+// \date    2023 01 26
 //-----------------------------------------------------------------------------
 
 #pragma once

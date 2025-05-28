@@ -26,9 +26,9 @@
 
 //-----------------------------------------------------------------------------
 // This file is a part of the QuickQanava software library.
-// \file	Port.qml
+// \file    Port.qml
 // \author	benoit@destrat.io
-// \date	2017 08 12
+// \date    2017 08 12
 //-----------------------------------------------------------------------------
 
 import QtQuick
